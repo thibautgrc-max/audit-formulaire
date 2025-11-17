@@ -314,21 +314,6 @@
     <!-- Signature Numérion -->
     <div class="brand-signature">Numérion Éducation™</div>
 
-    <!-- Bandeau succès après redirection (?audit=ok) -->
-    <div id="auditSuccessBanner" class="small" style="
-      display:none;
-      margin:0 auto 1rem auto;
-      max-width:880px;
-      border-radius:.75rem;
-      padding:.6rem .9rem;
-      background:#ecfdf3;
-      color:#166534;
-      border:1px solid #bbf7d0;
-      text-align:center;
-    ">
-      Votre demande d’audit a bien été envoyée. Nous revenons vers vous avec un livrable “board-ready”.
-    </div>
-
     <header class="page-header">
       <h1 class="page-title">Demande d'audit de trésorerie numérique</h1>
       <p class="page-subtitle">
@@ -401,8 +386,8 @@
 
         <!-- Métadonnées Formspree -->
         <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation" />
-        <!-- Redirection vers la même page avec ?audit=ok (à adapter si l’URL diffère) -->
-        <input type="hidden" name="_redirect" value="https://numerion.super.site/?audit=ok" />
+        <!-- Redirection vers la page de remerciement dédiée -->
+        <input type="hidden" name="_redirect" value="https://numerion.super.site/merci-audit" />
 
         <!-- Métadonnées internes Numérion -->
         <input type="hidden" name="Wizard version" value="V4 board-ready">
@@ -993,11 +978,10 @@
     </section>
   </div>
 
-  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring + succès) ========== -->
+  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring) ========== -->
   <script>
     (function(){
       const form = document.getElementById('auditWizardForm');
-      const successBanner = document.getElementById('auditSuccessBanner');
       if (!form) return;
 
       const steps = Array.from(form.querySelectorAll('.wizard-step'));
@@ -1016,16 +1000,6 @@
       const segmentInput = document.getElementById('wizardSegment');
 
       let current = 0; // index
-
-      // Bandeau succès si ?audit=ok dans l’URL
-      (function showSuccessIfNeeded(){
-        try {
-          const params = new URLSearchParams(window.location.search);
-          if (params.get('audit') === 'ok' && successBanner) {
-            successBanner.style.display = 'block';
-          }
-        } catch(e){}
-      })();
 
       // Source depuis l’URL (?source=...) ou valeur par défaut
       (function initSource(){
