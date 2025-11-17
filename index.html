@@ -314,7 +314,7 @@
     <!-- Signature Numérion -->
     <div class="brand-signature">Numérion Éducation™</div>
 
-    <!-- Bandeau succès après redirection (_next ?audit=ok) -->
+    <!-- Bandeau succès après redirection (?audit=ok) -->
     <div id="auditSuccessBanner" class="small" style="
       display:none;
       margin:0 auto 1rem auto;
@@ -389,20 +389,22 @@
         </div>
       </div>
 
-      <!-- Remplace XXXXXXXX par ton ID Formspree et l’URL _next par ta vraie URL -->
       <form
         id="auditWizardForm"
-        action="https://formspree.io/f/XXXXXXXX"
+        action="https://formspree.io/f/mgvrjwqa"
         method="POST"
-        enctype="application/x-www-form-urlencoded"
         novalidate
         style="margin-top:1.5rem;display:flex;flex-direction:column;gap:1.25rem"
       >
+        <!-- Honeypot anti-bot -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
-        <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation">
-        <input type="hidden" name="_next" value="https://votre-url-de-retour.fr/?audit=ok">
+        <!-- Métadonnées Formspree -->
+        <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation" />
+        <!-- Redirection vers la même page avec ?audit=ok (à adapter si l’URL diffère) -->
+        <input type="hidden" name="_redirect" value="https://numerion.super.site/?audit=ok" />
 
+        <!-- Métadonnées internes Numérion -->
         <input type="hidden" name="Wizard version" value="V4 board-ready">
         <input type="hidden" name="Date d’envoi" id="wizardSubmitDate">
         <input type="hidden" name="Source" id="wizardSource" value="">
@@ -472,7 +474,7 @@
                 type="tel"
                 placeholder="+33 ..."
                 autocomplete="tel"
-                pattern="^\\+?[0-9\\s\\-]{7,}$"
+                pattern="^\+?[0-9\s\-]{7,}$"
               />
               <p class="hint">Facilite l’organisation rapide de la visio si nécessaire.</p>
             </div>
