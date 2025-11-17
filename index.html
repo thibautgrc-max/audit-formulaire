@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,6 +31,15 @@
       width: 100%;
       max-width: 980px;
       margin: 0 auto;
+    }
+
+    .brand-signature {
+      text-align: center;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: #9ca3af;
     }
 
     .page-header {
@@ -302,6 +310,25 @@
 </head>
 <body>
   <div class="page-shell">
+
+    <!-- Signature Numérion -->
+    <div class="brand-signature">Numérion Éducation™</div>
+
+    <!-- Bandeau succès après redirection (_next ?audit=ok) -->
+    <div id="auditSuccessBanner" class="small" style="
+      display:none;
+      margin:0 auto 1rem auto;
+      max-width:880px;
+      border-radius:.75rem;
+      padding:.6rem .9rem;
+      background:#ecfdf3;
+      color:#166534;
+      border:1px solid #bbf7d0;
+      text-align:center;
+    ">
+      Votre demande d’audit a bien été envoyée. Nous revenons vers vous avec un livrable “board-ready”.
+    </div>
+
     <header class="page-header">
       <h1 class="page-title">Demande d'audit de trésorerie numérique</h1>
       <p class="page-subtitle">
@@ -362,7 +389,7 @@
         </div>
       </div>
 
-      <!-- Remplace XXXXXXXX par ton ID Formspree -->
+      <!-- Remplace XXXXXXXX par ton ID Formspree et l’URL _next par ta vraie URL -->
       <form
         id="auditWizardForm"
         action="https://formspree.io/f/XXXXXXXX"
@@ -373,11 +400,10 @@
       >
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
-        <!-- Sujet + adresse pour réponse (tu recevras sur la boîte liée à Formspree, _replyto = ton email) -->
         <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation">
-        <input type="hidden" name="_replyto" value="thibaut0garcia@gmail.com">
+        <input type="hidden" name="_next" value="https://votre-url-de-retour.fr/?audit=ok">
 
-        <input type="hidden" name="Wizard version" value="V3 multi-étapes premium">
+        <input type="hidden" name="Wizard version" value="V4 board-ready">
         <input type="hidden" name="Date d’envoi" id="wizardSubmitDate">
         <input type="hidden" name="Source" id="wizardSource" value="">
         <input type="hidden" name="Score maturité" id="wizardMaturityScore" value="">
@@ -385,7 +411,16 @@
 
         <!-- ========== ÉTAPE 1 : IDENTITÉ & CONTACT ========== -->
         <section class="wizard-step is-active" data-step="1" aria-label="Étape 1 — Identité & contact" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem">Étape 1/5 — Identité &amp; contact décisionnel</div>
+          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
+            <span style="
+              display:inline-flex;
+              width:.5rem;
+              height:.5rem;
+              border-radius:999px;
+              background:linear-gradient(120deg,#16a34a,#0f766e);
+            "></span>
+            <span>Étape 1/5 — Identité &amp; contact décisionnel</span>
+          </div>
           <p class="muted small" style="margin-top:0;margin-bottom:1rem">
             Nous identifions qui porte la décision et comment vous joindre pour la restitution.
           </p>
@@ -422,7 +457,7 @@
               <label for="emailPro" class="small" style="font-weight:700">Email professionnel</label>
               <input
                 id="emailPro"
-                name="Email pro"
+                name="email"
                 type="email"
                 placeholder="prenom.nom@societe.fr"
                 autocomplete="email"
@@ -446,7 +481,16 @@
 
         <!-- ========== ÉTAPE 2 : STRUCTURE & RÉFÉRENTIEL ========== -->
         <section class="wizard-step" data-step="2" aria-label="Étape 2 — Structure & référentiel" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem">Étape 2/5 — Structure &amp; référentiel comptable</div>
+          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
+            <span style="
+              display:inline-flex;
+              width:.5rem;
+              height:.5rem;
+              border-radius:999px;
+              background:linear-gradient(120deg,#16a34a,#0f766e);
+            "></span>
+            <span>Étape 2/5 — Structure &amp; référentiel comptable</span>
+          </div>
           <p class="muted small" style="margin-top:0;margin-bottom:1rem">
             Ces éléments structurent l’analyse de bilan et le langage utilisé avec vos auditeurs.
           </p>
@@ -530,15 +574,6 @@
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
             <div style="display:grid;gap:.4rem">
-              <label for="siren" class="small" style="font-weight:700">SIREN / SIRET</label>
-              <input
-                id="siren"
-                name="SIREN / SIRET"
-                type="text"
-                placeholder="Ex : 123 456 789 00012"
-              />
-            </div>
-            <div style="display:grid;gap:.4rem">
               <label for="perimetreAudit" class="small" style="font-weight:700">Périmètre de l’audit</label>
               <select id="perimetreAudit" name="Périmètre de l’audit">
                 <option value="">Sélectionner…</option>
@@ -548,9 +583,6 @@
                 <option>Filiale spécifique</option>
               </select>
             </div>
-          </div>
-
-          <div class="grid" style="gap:1rem;margin-top:.75rem">
             <div style="display:grid;gap:.4rem">
               <label for="cac" class="small" style="font-weight:700">Présence d’un commissaire aux comptes</label>
               <select id="cac" name="Commissaire aux comptes">
@@ -559,15 +591,6 @@
                 <option>Non</option>
                 <option>En cours de nomination</option>
               </select>
-            </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="cabinetCac" class="small" style="font-weight:700">Cabinet CAC (si applicable)</label>
-              <input
-                id="cabinetCac"
-                name="Cabinet commissaire aux comptes"
-                type="text"
-                placeholder="Nom du cabinet (optionnel)"
-              />
             </div>
           </div>
 
@@ -595,7 +618,16 @@
 
         <!-- ========== ÉTAPE 3 : TRÉSORERIE & ALLOCATION ========== -->
         <section class="wizard-step" data-step="3" aria-label="Étape 3 — Trésorerie & allocation" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem">Étape 3/5 — Trésorerie &amp; poche stratégique</div>
+          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
+            <span style="
+              display:inline-flex;
+              width:.5rem;
+              height:.5rem;
+              border-radius:999px;
+              background:linear-gradient(120deg,#16a34a,#0f766e);
+            "></span>
+            <span>Étape 3/5 — Trésorerie &amp; poche stratégique</span>
+          </div>
           <p class="muted small" style="margin-top:0;margin-bottom:1rem">
             Nous cadrons les ordres de grandeur et l’horizon de votre poche de trésorerie numérique.
           </p>
@@ -703,35 +735,22 @@
               </select>
             </div>
           </div>
-
-          <div style="display:grid;gap:.4rem;margin-top:.75rem">
-            <span class="small" style="font-weight:700">Restrictions internes explicites</span>
-            <div class="wizard-checkbox-grid">
-              <label class="small">
-                <input type="checkbox" name="Restrictions internes[]" value="Interdiction DeFi">
-                Interdiction DeFi
-              </label>
-              <label class="small">
-                <input type="checkbox" name="Restrictions internes[]" value="Interdiction produits dérivés">
-                Interdiction produits dérivés
-              </label>
-              <label class="small">
-                <input type="checkbox" name="Restrictions internes[]" value="Interdiction lending / borrowing">
-                Interdiction lending / borrowing
-              </label>
-              <label class="small">
-                <input type="checkbox" name="Restrictions internes[]" value="Aucune restriction formalisée">
-                Aucune restriction formalisée
-              </label>
-            </div>
-          </div>
         </section>
 
         <!-- ========== ÉTAPE 4 : GOUVERNANCE & CONFORMITÉ ========== -->
         <section class="wizard-step" data-step="4" aria-label="Étape 4 — Gouvernance & conformité" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem">Étape 4/5 — Gouvernance &amp; conformité</div>
+          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
+            <span style="
+              display:inline-flex;
+              width:.5rem;
+              height:.5rem;
+              border-radius:999px;
+              background:linear-gradient(120deg,#16a34a,#0f766e);
+            "></span>
+            <span>Étape 4/5 — Gouvernance &amp; conformité</span>
+          </div>
           <p class="muted small" style="margin-top:0;margin-bottom:1rem">
-            Ces points structurent le dossier « opposable audit » et l’onboarding PSAN.
+            Ces points structurent le dossier « opposable audit » et la communication avec vos auditeurs.
           </p>
 
           <div class="grid" style="gap:1rem">
@@ -833,32 +852,30 @@
             </div>
           </div>
 
-          <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="frequenceComite" class="small" style="font-weight:700">Fréquence de revue en comité (audit / risques / board)</label>
-              <select id="frequenceComite" name="Fréquence revue comité">
-                <option value="">Sélectionner…</option>
-                <option>Au fil de l’eau</option>
-                <option>Trimestriel</option>
-                <option>Annuel</option>
-                <option>Non formalisé</option>
-              </select>
-            </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="kycAml" class="small" style="font-weight:700">Procédures KYC/AML liées à des flux crypto</label>
-              <select id="kycAml" name="Procédures KYC/AML crypto">
-                <option value="">Sélectionner…</option>
-                <option>Oui (via PSAN / PSP)</option>
-                <option>Partiellement</option>
-                <option>Non</option>
-              </select>
-            </div>
+          <div style="display:grid;gap:.4rem;margin-top:.75rem">
+            <label for="frequenceComite" class="small" style="font-weight:700">Fréquence de revue en comité (audit / risques / board)</label>
+            <select id="frequenceComite" name="Fréquence revue comité">
+              <option value="">Sélectionner…</option>
+              <option>Au fil de l’eau</option>
+              <option>Trimestriel</option>
+              <option>Annuel</option>
+              <option>Non formalisé</option>
+            </select>
           </div>
         </section>
 
         <!-- ========== ÉTAPE 5 : CONTEXTE & VALIDATION ========== -->
         <section class="wizard-step" data-step="5" aria-label="Étape 5 — Contexte & validation" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem">Étape 5/5 — Contexte &amp; validation</div>
+          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
+            <span style="
+              display:inline-flex;
+              width:.5rem;
+              height:.5rem;
+              border-radius:999px;
+              background:linear-gradient(120deg,#16a34a,#0f766e);
+            "></span>
+            <span>Étape 5/5 — Contexte &amp; validation</span>
+          </div>
           <p class="muted small" style="margin-top:0;margin-bottom:1rem">
             Quelques lignes pour comprendre votre contexte et organiser la restitution.
           </p>
@@ -974,10 +991,11 @@
     </section>
   </div>
 
-  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring) ========== -->
+  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring + succès) ========== -->
   <script>
     (function(){
       const form = document.getElementById('auditWizardForm');
+      const successBanner = document.getElementById('auditSuccessBanner');
       if (!form) return;
 
       const steps = Array.from(form.querySelectorAll('.wizard-step'));
@@ -996,6 +1014,16 @@
       const segmentInput = document.getElementById('wizardSegment');
 
       let current = 0; // index
+
+      // Bandeau succès si ?audit=ok dans l’URL
+      (function showSuccessIfNeeded(){
+        try {
+          const params = new URLSearchParams(window.location.search);
+          if (params.get('audit') === 'ok' && successBanner) {
+            successBanner.style.display = 'block';
+          }
+        } catch(e){}
+      })();
 
       // Source depuis l’URL (?source=...) ou valeur par défaut
       (function initSource(){
@@ -1023,13 +1051,11 @@
         prevBtn.disabled = current === 0;
 
         if(current === total-1){
-          nextBtn.style.display = 'inline-flex';
-          nextBtn.style.visibility = 'hidden'; /* garde la place visuellement */
+          nextBtn.style.display = 'none';
           submitBtn.style.display = 'inline-flex';
           buildSummary();
         }else{
           nextBtn.style.display = 'inline-flex';
-          nextBtn.style.visibility = 'visible';
           submitBtn.style.display = 'none';
           if(summaryNode) summaryNode.innerHTML = '';
         }
