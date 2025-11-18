@@ -321,6 +321,37 @@
       </p>
     </header>
 
+    <!-- ===================== MESSAGE DE FIN (AFFICHÉ APRÈS ENVOI) ===================== -->
+    <section id="auditSuccessLocal" class="card" style="max-width:880px; display:none; margin-bottom:1.25rem; text-align:center;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
+        <span style="
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          width:2.4rem;
+          height:2.4rem;
+          border-radius:999px;
+          background:linear-gradient(135deg,#16a34a,#0f766e);
+          box-shadow:0 10px 25px rgba(22,163,74,0.45);
+        ">
+          <span style="font-size:1.4rem;color:#ecfdf3;">✓</span>
+        </span>
+      </div>
+      <h2 style="margin:0;font-size:1.15rem;font-weight:650;color:#022c22;">
+        Merci — Audit Numérion bien reçu
+      </h2>
+      <p class="small muted" style="margin:.45rem 0 .3rem 0;">
+        Votre formulaire d’audit de trésorerie numérique a été transmis à Numérion Éducation™.
+      </p>
+      <p class="small" style="margin:0;color:#374151;">
+        Vous recevez sous 24–48&nbsp;h ouvrées une première note de cadrage “board-ready”,  
+        construite pour vos échanges avec la direction, le comité d’audit et vos auditeurs.
+      </p>
+      <p class="small muted" style="margin-top:.7rem;">
+        Si vous avez partagé un créneau de visio, nous revenons vers vous pour confirmer l’horaire.
+      </p>
+    </section>
+
     <!-- ===================== BLOC INTRO AUDIT & SIMULATION IA ===================== -->
     <section class="card" style="max-width:880px">
       <div class="label">Audit de trésorerie numérique &amp; Simulation IA — Numérion Éducation™</div>
@@ -386,8 +417,6 @@
 
         <!-- Métadonnées Formspree -->
         <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation" />
-        <!-- Redirection vers la page de remerciement dédiée -->
-        <input type="hidden" name="_redirect" value="https://numerion.super.site/merci-audit" />
 
         <!-- Métadonnées internes Numérion -->
         <input type="hidden" name="Wizard version" value="V4 board-ready">
@@ -459,7 +488,7 @@
                 type="tel"
                 placeholder="+33 ..."
                 autocomplete="tel"
-                pattern="^\+?[0-9\s\-]{7,}$"
+                pattern="^\\+?[0-9\\s\\-]{7,}$"
               />
               <p class="hint">Facilite l’organisation rapide de la visio si nécessaire.</p>
             </div>
@@ -978,10 +1007,12 @@
     </section>
   </div>
 
-  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring) ========== -->
+  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring + envoi AJAX) ========== -->
   <script>
     (function(){
       const form = document.getElementById('auditWizardForm');
+      const successCard = document.getElementById('auditSuccessLocal');
+      const formCard = document.getElementById('form-audit');
       if (!form) return;
 
       const steps = Array.from(form.querySelectorAll('.wizard-step'));
@@ -1172,8 +1203,9 @@
       });
 
       form.addEventListener('submit', function(e){
+        e.preventDefault();
+
         if(!validateStep(current)){
-          e.preventDefault();
           return;
         }
 
@@ -1186,7 +1218,39 @@
         buildSummary();
 
         statusNode.textContent = "Envoi sécurisé de votre demande d’audit…";
-        // Laisser le submit se faire naturellement vers Formspree
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        })
+        .then(function(response){
+          if (response.ok) {
+            statusNode.textContent = "Votre demande d’audit Numérion a bien été envoyée.";
+            // Affiche la carte de succès, masque le formulaire
+            if(successCard){
+              successCard.style.display = 'block';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if(formCard){
+              formCard.style.display = 'none';
+            }
+            // Sécurise les boutons
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            submitBtn.disabled = true;
+          } else {
+            return response.json().then(function(data){
+              throw new Error(data.error || 'Une erreur est survenue lors de l’envoi.');
+            });
+          }
+        })
+        .catch(function(error){
+          statusNode.textContent = "Erreur lors de l’envoi de votre demande d’audit. Merci de réessayer ou de nous contacter directement.";
+          console.error(error);
+        });
       });
 
       updateUI();
