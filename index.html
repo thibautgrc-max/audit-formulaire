@@ -7,306 +7,8 @@
   <meta name="description" content="Formulaire d'audit de trésorerie numérique et simulation IA pour directions financières, comités d'audit et comités de direction." />
   <meta name="theme-color" content="#020617" />
 
-  <style>
-    /* ========= RESET / BASE ========= */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                   "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0, #020617 46%, #020617 100%);
-      color: #0f172a;
-    }
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1.5rem 1rem 2.5rem;
-    }
-
-    /* ========= PAGE SHELL ========= */
-    .page-shell {
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .brand-signature {
-      text-align: center;
-      margin-bottom: 0.4rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      color: #9ca3af;
-    }
-
-    .page-header {
-      text-align: center;
-      color: #e5e7eb;
-      margin-bottom: 1.5rem;
-    }
-    .page-title {
-      font-size: clamp(1.8rem, 3vw, 2.1rem);
-      font-weight: 650;
-      letter-spacing: 0.03em;
-    }
-    .page-subtitle {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      margin-top: 0.4rem;
-    }
-
-    /* ========= TYPO & UTILITAIRES ========= */
-    .small { font-size: 0.85rem; }
-    .muted { color: #6b7280; }
-    .label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #111827;
-    }
-    .hint {
-      font-size: 0.72rem;
-      color: #9ca3af;
-    }
-    .grid {
-      display: grid;
-    }
-    @media (min-width: 720px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* ========= CARDS ========= */
-    .card{
-      border-radius: 1.3rem;
-      border: 1px solid rgba(15,23,42,0.12);
-      background: rgba(248,250,252,0.98);
-      backdrop-filter: blur(14px);
-      padding: 1.5rem 1.6rem;
-      box-shadow: 0 20px 45px rgba(15,23,42,0.25);
-      margin-inline: auto;
-    }
-    #form-audit.card {
-      margin-top: 1.5rem;
-    }
-
-    /* ========= FORM & CHAMPS ========= */
-    form {
-      width: 100%;
-    }
-    label {
-      color: #111827;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 0.55rem 0.6rem;
-      border-radius: 0.55rem;
-      border: 1px solid #d1d5db;
-      font-size: 0.85rem;
-      font-family: inherit;
-      color: #111827;
-      background-color: #ffffff;
-      outline: none;
-      transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
-    }
-    input::placeholder,
-    textarea::placeholder {
-      color: #9ca3af;
-    }
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #16a34a;
-      box-shadow: 0 0 0 1px rgba(22,163,74,0.4);
-      background-color: #f9fafb;
-    }
-    textarea {
-      resize: vertical;
-    }
-
-    /* ========= BOUTONS ========= */
-    .btn{
-      border-radius: 999px;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: 1px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      transition: background-color 0.18s ease, color 0.18s ease,
-                  border-color 0.18s ease, box-shadow 0.18s ease,
-                  transform 0.08s ease;
-      white-space: nowrap;
-    }
-    .btn:active {
-      transform: translateY(1px);
-    }
-    .btn-light{
-      background:#f9fafb;
-      color:#111827;
-      border-color:#e5e7eb;
-    }
-    .btn-light:hover{
-      background:#f3f4f6;
-      box-shadow:0 8px 25px rgba(15,23,42,0.05);
-    }
-    .btn-dark{
-      background:#020617;
-      color:#f9fafb;
-      border-color:#0f172a;
-    }
-    .btn-dark:hover{
-      background:#020617;
-      box-shadow:0 10px 30px rgba(15,23,42,0.32);
-    }
-    .btn-green{
-      background:#16a34a;
-      color:#ecfdf3;
-      border-color:#16a34a;
-    }
-    .btn-green:hover{
-      background:#15803d;
-      border-color:#15803d;
-      box-shadow:0 12px 35px rgba(22,163,74,0.45);
-    }
-    .btn[disabled],
-    .btn[disabled]:hover {
-      opacity: 0.5;
-      cursor: default;
-      box-shadow: none;
-      transform: none;
-    }
-
-    /* ========= PROGRESSION WIZARD ========= */
-    .wizard-progress{
-      margin-top: 1rem;
-      margin-bottom: 1.1rem;
-    }
-    .wizard-progress-bar{
-      width: 100%;
-      height: 6px;
-      border-radius: 999px;
-      background:#e5e7eb;
-      overflow:hidden;
-    }
-    .wizard-progress-bar-fill{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg,#16a34a,#0f766e);
-      transition:width .25s ease-out;
-    }
-    .wizard-steps-labels{
-      display:flex;
-      justify-content:space-between;
-      gap:.3rem;
-      margin-top:.4rem;
-    }
-    .wizard-step-label{
-      flex:1;
-      text-align:center;
-      font-size:.7rem;
-      color:#9ca3af;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      padding:.25rem .4rem;
-      border-radius:999px;
-    }
-    .wizard-step-label.is-active{
-      color:#16a34a;
-      font-weight:700;
-      background:rgba(22,163,74,0.08);
-    }
-
-    .wizard-step{
-      display:none;
-      outline:none;
-      border-radius:1rem;
-      border:1px solid #e5e7eb;
-      background:#ffffff;
-      padding:1rem 1rem 1.1rem;
-      margin-top:.35rem;
-    }
-    .wizard-step.is-active{
-      display:block;
-      box-shadow:0 10px 30px rgba(15,23,42,0.08);
-      border-color:rgba(22,163,74,0.18);
-    }
-
-    .wizard-checkbox-grid{
-      display:grid;
-      gap:.25rem;
-    }
-    .wizard-checkbox-grid label {
-      display: flex;
-      gap: 0.45rem;
-      align-items: flex-start;
-    }
-    .wizard-checkbox-grid input[type="checkbox"] {
-      margin-top: 0.1rem;
-    }
-
-    .wizard-summary{
-      border-radius:.75rem;
-      border:1px solid #e5e7eb;
-      background:#f9fafb;
-      padding:.75rem .9rem;
-      font-size:.8rem;
-      color:#4b5563;
-    }
-    .wizard-summary-title{
-      font-weight:600;
-      margin-bottom:.35rem;
-      color:#111827;
-    }
-    .wizard-summary-list{
-      margin:0;
-      padding-left:1.1rem;
-      display:grid;
-      gap:.1rem;
-    }
-
-    .wizard-nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:.5rem;
-      gap:.75rem;
-      flex-wrap:wrap;
-    }
-
-    /* ========= RESPONSIVE ========= */
-    @media (max-width: 720px){
-      body {
-        padding: 1.1rem 0.7rem 2.2rem;
-      }
-      .card{
-        padding:1.25rem 1.1rem;
-        box-shadow:0 14px 35px rgba(15,23,42,0.35);
-      }
-      .wizard-steps-labels{display:none}
-      .wizard-progress-bar{height:5px}
-      .wizard-step{padding:.85rem .85rem 1rem}
-      .wizard-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .wizard-nav .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
+  <!-- Styles externes -->
+  <link rel="stylesheet" href="numerion.css" />
 </head>
 <body>
   <div class="page-shell">
@@ -314,6 +16,7 @@
     <!-- Signature Numérion -->
     <div class="brand-signature">Numérion Éducation™</div>
 
+    <!-- Header principal -->
     <header class="page-header">
       <h1 class="page-title">Demande d'audit de trésorerie numérique</h1>
       <p class="page-subtitle">
@@ -322,22 +25,11 @@
     </header>
 
     <!-- ===================== MESSAGE DE FIN (AFFICHÉ APRÈS ENVOI) ===================== -->
-    <section id="auditSuccessLocal" class="card" style="max-width:880px; display:none; margin-bottom:1.25rem; text-align:center;">
-      <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
-        <span style="
-          display:inline-flex;
-          align-items:center;
-          justify-content:center;
-          width:2.4rem;
-          height:2.4rem;
-          border-radius:999px;
-          background:linear-gradient(135deg,#16a34a,#0f766e);
-          box-shadow:0 10px 25px rgba(22,163,74,0.45);
-        ">
-          <span style="font-size:1.4rem;color:#ecfdf3;">✓</span>
-        </span>
+    <section id="auditSuccessLocal" class="card success-card">
+      <div class="success-icon-wrapper">
+        <span class="success-icon">✓</span>
       </div>
-      <h2 style="margin:0;font-size:1.15rem;font-weight:650;color:#022c22;">
+      <h2 class="success-title">
         Merci — Audit Numérion bien reçu
       </h2>
       <p class="small muted" style="margin:.45rem 0 .3rem 0;">
@@ -353,24 +45,24 @@
     </section>
 
     <!-- ===================== BLOC INTRO AUDIT & SIMULATION IA ===================== -->
-    <section class="card" style="max-width:880px">
+    <section class="card intro-card">
       <div class="label">Audit de trésorerie numérique &amp; Simulation IA — Numérion Éducation™</div>
       <p class="muted small" style="margin-top:.35rem;margin-bottom:.75rem">
         3 livrables opérationnels · adaptés aux échanges avec vos auditeurs et votre board.
       </p>
 
-      <div class="grid" style="gap:1rem;align-items:flex-start">
-        <div style="display:grid;gap:.35rem">
-          <div class="small" style="font-weight:600">Vous recevez un livrable “board-ready” :</div>
-          <ul class="small muted" style="margin:0;padding-left:1.2rem;display:grid;gap:.15rem">
+      <div class="grid intro-grid">
+        <div class="intro-col">
+          <div class="small intro-title">Vous recevez un livrable “board-ready” :</div>
+          <ul class="small muted intro-list">
             <li>Note de cadrage stratégique &amp; synthèse exécutive.</li>
             <li>Simulation chiffrée de poche de trésorerie numérique.</li>
             <li>Matrice risques &amp; gouvernance (dossier opposable audit).</li>
           </ul>
         </div>
-        <div style="display:grid;gap:.35rem">
-          <div class="small" style="font-weight:600">Cadre &amp; conformité :</div>
-          <ul class="small muted" style="margin:0;padding-left:1.2rem;display:grid;gap:.15rem">
+        <div class="intro-col">
+          <div class="small intro-title">Cadre &amp; conformité :</div>
+          <ul class="small muted intro-list">
             <li>Approche alignée MiCA &amp; IFRS (périmètre informatif).</li>
             <li>Onboarding possible via PSAN/PSCA régulés AMF.</li>
             <li>Aucune détention de fonds, aucun ordre transmis.</li>
@@ -378,14 +70,14 @@
         </div>
       </div>
 
-      <div class="small muted" style="margin-top:.8rem;border-top:1px solid #e5e7eb;padding-top:.5rem">
+      <div class="small muted intro-conf">
         Confidentialité : les informations transmises sont utilisées exclusivement pour produire votre audit
         et ne sont jamais partagées à des tiers sans votre accord écrit.
       </div>
     </section>
 
     <!-- ===================== WIZARD AUDIT & SIMULATION IA ===================== -->
-    <section id="form-audit" class="card" style="max-width:880px">
+    <section id="form-audit" class="card form-card">
       <div class="label">Formulaire d'audit &amp; Simulation IA</div>
       <p class="muted small" style="margin-top:.3rem;margin-bottom:1rem">
         5 étapes guidées · 3 à 5 minutes · Dossier exploitable en comité de direction.
@@ -394,7 +86,7 @@
       <!-- Progression visuelle -->
       <div class="wizard-progress" aria-hidden="true">
         <div class="wizard-progress-bar">
-          <div class="wizard-progress-bar-fill" id="wizardProgressFill" style="width:20%"></div>
+          <div class="wizard-progress-bar-fill" id="wizardProgressFill"></div>
         </div>
         <div class="wizard-steps-labels">
           <span class="wizard-step-label is-active">1. Identité</span>
@@ -410,10 +102,10 @@
         action="https://formspree.io/f/mgvrjwqa"
         method="POST"
         novalidate
-        style="margin-top:1.5rem;display:flex;flex-direction:column;gap:1.25rem"
+        class="wizard-form"
       >
         <!-- Honeypot anti-bot -->
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
 
         <!-- Métadonnées Formspree -->
         <input type="hidden" name="_subject" value="Audit &amp; Simulation IA — Numérion Éducation" />
@@ -427,23 +119,17 @@
 
         <!-- ========== ÉTAPE 1 : IDENTITÉ & CONTACT ========== -->
         <section class="wizard-step is-active" data-step="1" aria-label="Étape 1 — Identité & contact" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
-            <span style="
-              display:inline-flex;
-              width:.5rem;
-              height:.5rem;
-              border-radius:999px;
-              background:linear-gradient(120deg,#16a34a,#0f766e);
-            "></span>
+          <div class="label muted step-header">
+            <span class="step-dot"></span>
             <span>Étape 1/5 — Identité &amp; contact décisionnel</span>
           </div>
-          <p class="muted small" style="margin-top:0;margin-bottom:1rem">
+          <p class="muted small step-subtitle">
             Nous identifions qui porte la décision et comment vous joindre pour la restitution.
           </p>
 
           <div class="grid" style="gap:1rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="role" class="small" style="font-weight:700">Rôle principal</label>
+            <div class="field-group">
+              <label for="role" class="small field-label">Rôle principal</label>
               <select name="Rôle" id="role" required>
                 <option value="">Sélectionner…</option>
                 <option>Direction générale (DG / CEO)</option>
@@ -454,8 +140,8 @@
               </select>
             </div>
 
-            <div style="display:grid;gap:.4rem">
-              <label for="nomSoc" class="small" style="font-weight:700">Nom &amp; société</label>
+            <div class="field-group">
+              <label for="nomSoc" class="small field-label">Nom &amp; société</label>
               <input
                 id="nomSoc"
                 name="Nom et Société"
@@ -469,8 +155,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.5rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="emailPro" class="small" style="font-weight:700">Email professionnel</label>
+            <div class="field-group">
+              <label for="emailPro" class="small field-label">Email professionnel</label>
               <input
                 id="emailPro"
                 name="email"
@@ -480,15 +166,15 @@
                 required
               />
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="tel" class="small" style="font-weight:700">Téléphone (optionnel)</label>
+            <div class="field-group">
+              <label for="tel" class="small field-label">Téléphone (optionnel)</label>
               <input
                 id="tel"
                 name="Téléphone"
                 type="tel"
                 placeholder="+33 ..."
                 autocomplete="tel"
-                pattern="^\\+?[0-9\\s\\-]{7,}$"
+                pattern="^\+?[0-9\s\-]{7,}$"
               />
               <p class="hint">Facilite l’organisation rapide de la visio si nécessaire.</p>
             </div>
@@ -497,23 +183,17 @@
 
         <!-- ========== ÉTAPE 2 : STRUCTURE & RÉFÉRENTIEL ========== -->
         <section class="wizard-step" data-step="2" aria-label="Étape 2 — Structure & référentiel" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
-            <span style="
-              display:inline-flex;
-              width:.5rem;
-              height:.5rem;
-              border-radius:999px;
-              background:linear-gradient(120deg,#16a34a,#0f766e);
-            "></span>
+          <div class="label muted step-header">
+            <span class="step-dot"></span>
             <span>Étape 2/5 — Structure &amp; référentiel comptable</span>
           </div>
-          <p class="muted small" style="margin-top:0;margin-bottom:1rem">
+          <p class="muted small step-subtitle">
             Ces éléments structurent l’analyse de bilan et le langage utilisé avec vos auditeurs.
           </p>
 
           <div class="grid" style="gap:1rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="secteur" class="small" style="font-weight:700">Secteur d’activité</label>
+            <div class="field-group">
+              <label for="secteur" class="small field-label">Secteur d’activité</label>
               <select id="secteur" name="Secteur d’activité" required>
                 <option value="">Sélectionner…</option>
                 <option>Industrie</option>
@@ -526,8 +206,8 @@
               </select>
             </div>
 
-            <div style="display:grid;gap:.4rem">
-              <label for="taille" class="small" style="font-weight:700">Taille de l’entreprise</label>
+            <div class="field-group">
+              <label for="taille" class="small field-label">Taille de l’entreprise</label>
               <select id="taille" name="Taille entreprise" required>
                 <option value="">Sélectionner…</option>
                 <option>&lt; 50 salariés</option>
@@ -538,8 +218,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="formeJuridique" class="small" style="font-weight:700">Forme juridique</label>
+            <div class="field-group">
+              <label for="formeJuridique" class="small field-label">Forme juridique</label>
               <select id="formeJuridique" name="Forme juridique">
                 <option value="">Sélectionner…</option>
                 <option>SAS</option>
@@ -550,8 +230,8 @@
                 <option>Autre</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="caAnnuel" class="small" style="font-weight:700">Chiffre d’affaires annuel (fourchette)</label>
+            <div class="field-group">
+              <label for="caAnnuel" class="small field-label">Chiffre d’affaires annuel (fourchette)</label>
               <select id="caAnnuel" name="Chiffre d’affaires annuel">
                 <option value="">Sélectionner…</option>
                 <option>&lt; 5 M€</option>
@@ -563,8 +243,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="compta" class="small" style="font-weight:700">Référentiel comptable</label>
+            <div class="field-group">
+              <label for="compta" class="small field-label">Référentiel comptable</label>
               <select id="compta" name="Référentiel comptable" required>
                 <option value="">Sélectionner…</option>
                 <option>IFRS</option>
@@ -573,8 +253,8 @@
                 <option>Autre / non précisé</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="juridiction" class="small" style="font-weight:700">Pays / juridiction principale</label>
+            <div class="field-group">
+              <label for="juridiction" class="small field-label">Pays / juridiction principale</label>
               <select id="juridiction" name="Pays / juridiction">
                 <option value="">Sélectionner…</option>
                 <option>France (zone euro)</option>
@@ -589,8 +269,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="perimetreAudit" class="small" style="font-weight:700">Périmètre de l’audit</label>
+            <div class="field-group">
+              <label for="perimetreAudit" class="small field-label">Périmètre de l’audit</label>
               <select id="perimetreAudit" name="Périmètre de l’audit">
                 <option value="">Sélectionner…</option>
                 <option>Entité seule</option>
@@ -599,8 +279,8 @@
                 <option>Filiale spécifique</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="cac" class="small" style="font-weight:700">Présence d’un commissaire aux comptes</label>
+            <div class="field-group">
+              <label for="cac" class="small field-label">Présence d’un commissaire aux comptes</label>
               <select id="cac" name="Commissaire aux comptes">
                 <option value="">Sélectionner…</option>
                 <option>Oui</option>
@@ -611,8 +291,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="groupe" class="small" style="font-weight:700">Appartenance à un groupe</label>
+            <div class="field-group">
+              <label for="groupe" class="small field-label">Appartenance à un groupe</label>
               <select id="groupe" name="Appartenance groupe">
                 <option value="">Sélectionner…</option>
                 <option>Indépendant</option>
@@ -620,8 +300,8 @@
                 <option>Holding de tête</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="nomGroupe" class="small" style="font-weight:700">Nom du groupe (si applicable)</label>
+            <div class="field-group">
+              <label for="nomGroupe" class="small field-label">Nom du groupe (si applicable)</label>
               <input
                 id="nomGroupe"
                 name="Nom groupe"
@@ -634,23 +314,17 @@
 
         <!-- ========== ÉTAPE 3 : TRÉSORERIE & ALLOCATION ========== -->
         <section class="wizard-step" data-step="3" aria-label="Étape 3 — Trésorerie & allocation" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
-            <span style="
-              display:inline-flex;
-              width:.5rem;
-              height:.5rem;
-              border-radius:999px;
-              background:linear-gradient(120deg,#16a34a,#0f766e);
-            "></span>
+          <div class="label muted step-header">
+            <span class="step-dot"></span>
             <span>Étape 3/5 — Trésorerie &amp; poche stratégique</span>
           </div>
-          <p class="muted small" style="margin-top:0;margin-bottom:1rem">
+          <p class="muted small step-subtitle">
             Nous cadrons les ordres de grandeur et l’horizon de votre poche de trésorerie numérique.
           </p>
 
           <div class="grid" style="gap:1rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="tresoEst" class="small" style="font-weight:700">Trésorerie disponible estimée</label>
+            <div class="field-group">
+              <label for="tresoEst" class="small field-label">Trésorerie disponible estimée</label>
               <select id="tresoEst" name="Trésorerie disponible" required>
                 <option value="">Sélectionner…</option>
                 <option>&lt; 300 000 €</option>
@@ -661,8 +335,8 @@
               <p class="hint">Fourchette globale en fin de mois, hors lignes de crédit.</p>
             </div>
 
-            <div style="display:grid;gap:.4rem">
-              <label for="alloc" class="small" style="font-weight:700">Allocation crypto envisagée</label>
+            <div class="field-group">
+              <label for="alloc" class="small field-label">Allocation crypto envisagée</label>
               <select id="alloc" name="Allocation envisagée" required>
                 <option value="">Sélectionner…</option>
                 <option>1 % (couverture inflation)</option>
@@ -675,8 +349,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.5rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="horizon" class="small" style="font-weight:700">Horizon de la poche</label>
+            <div class="field-group">
+              <label for="horizon" class="small field-label">Horizon de la poche</label>
               <select id="horizon" name="Horizon financier" required>
                 <option value="">Sélectionner…</option>
                 <option>12 mois</option>
@@ -684,8 +358,8 @@
                 <option>&gt; 24 mois</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="rendementCible" class="small" style="font-weight:700">Objectif de rendement annuel cible</label>
+            <div class="field-group">
+              <label for="rendementCible" class="small field-label">Objectif de rendement annuel cible</label>
               <select id="rendementCible" name="Rendement cible annuel">
                 <option value="">Sélectionner…</option>
                 <option>&lt; 5 %</option>
@@ -698,8 +372,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="volatilite" class="small" style="font-weight:700">Tolérance à la volatilité</label>
+            <div class="field-group">
+              <label for="volatilite" class="small field-label">Tolérance à la volatilité</label>
               <select id="volatilite" name="Tolérance volatilité">
                 <option value="">Sélectionner…</option>
                 <option>Très faible (priorité capital préservé)</option>
@@ -707,8 +381,8 @@
                 <option>Élevée (vision très long terme, forte conviction)</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="expositionActuelle" class="small" style="font-weight:700">Exposition numérique actuelle</label>
+            <div class="field-group">
+              <label for="expositionActuelle" class="small field-label">Exposition numérique actuelle</label>
               <select id="expositionActuelle" name="Exposition numérique actuelle">
                 <option value="">Sélectionner…</option>
                 <option>Aucune exposition</option>
@@ -719,8 +393,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <span class="small" style="font-weight:700">Univers d’actifs envisagé</span>
+            <div class="field-group">
+              <span class="small field-label">Univers d’actifs envisagé</span>
               <div class="wizard-checkbox-grid">
                 <label class="small">
                   <input type="checkbox" name="Univers d’actifs[]" value="BTC / ETH">
@@ -740,8 +414,8 @@
                 </label>
               </div>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="usagePoche" class="small" style="font-weight:700">Usage principal de la poche numérique</label>
+            <div class="field-group">
+              <label for="usagePoche" class="small field-label">Usage principal de la poche numérique</label>
               <select id="usagePoche" name="Usage principal">
                 <option value="">Sélectionner…</option>
                 <option>Couverture de l’inflation</option>
@@ -755,23 +429,17 @@
 
         <!-- ========== ÉTAPE 4 : GOUVERNANCE & CONFORMITÉ ========== -->
         <section class="wizard-step" data-step="4" aria-label="Étape 4 — Gouvernance & conformité" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
-            <span style="
-              display:inline-flex;
-              width:.5rem;
-              height:.5rem;
-              border-radius:999px;
-              background:linear-gradient(120deg,#16a34a,#0f766e);
-            "></span>
+          <div class="label muted step-header">
+            <span class="step-dot"></span>
             <span>Étape 4/5 — Gouvernance &amp; conformité</span>
           </div>
-          <p class="muted small" style="margin-top:0;margin-bottom:1rem">
+          <p class="muted small step-subtitle">
             Ces points structurent le dossier « opposable audit » et la communication avec vos auditeurs.
           </p>
 
           <div class="grid" style="gap:1rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="custody" class="small" style="font-weight:700">Mode de conservation envisagé</label>
+            <div class="field-group">
+              <label for="custody" class="small field-label">Mode de conservation envisagé</label>
               <select id="custody" name="Mode de conservation" required>
                 <option value="">Sélectionner…</option>
                 <option>PSAN agréé AMF</option>
@@ -781,8 +449,8 @@
               </select>
             </div>
 
-            <div style="display:grid;gap:.4rem">
-              <label for="maturity" class="small" style="font-weight:700">Niveau de conformité interne MiCA</label>
+            <div class="field-group">
+              <label for="maturity" class="small field-label">Niveau de conformité interne MiCA</label>
               <select id="maturity" name="Conformité MiCA" required>
                 <option value="">Sélectionner…</option>
                 <option>Aucune</option>
@@ -793,8 +461,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.5rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="urgence" class="small" style="font-weight:700">Niveau d'urgence</label>
+            <div class="field-group">
+              <label for="urgence" class="small field-label">Niveau d'urgence</label>
               <select id="urgence" name="Urgence" required>
                 <option value="">Sélectionner…</option>
                 <option>Étude / cadrage interne</option>
@@ -803,8 +471,8 @@
               </select>
             </div>
 
-            <div style="display:grid;gap:.4rem">
-              <label for="decisionScope" class="small" style="font-weight:700">Portée de la décision</label>
+            <div class="field-group">
+              <label for="decisionScope" class="small field-label">Portée de la décision</label>
               <select id="decisionScope" name="Portée de la décision">
                 <option value="">Sélectionner…</option>
                 <option>Exploration / cadrage</option>
@@ -815,8 +483,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="signataires" class="small" style="font-weight:700">Nombre de signataires impliqués</label>
+            <div class="field-group">
+              <label for="signataires" class="small field-label">Nombre de signataires impliqués</label>
               <select id="signataires" name="Nombre de signataires">
                 <option value="">Sélectionner…</option>
                 <option>1 (décisionnaire unique)</option>
@@ -824,8 +492,8 @@
                 <option>Collégial (board / comité)</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <span class="small" style="font-weight:700">Contraintes internes identifiées</span>
+            <div class="field-group">
+              <span class="small field-label">Contraintes internes identifiées</span>
               <div class="wizard-checkbox-grid">
                 <label class="small">
                   <input type="checkbox" name="Contraintes internes[]" value="Réserves du commissaire aux comptes">
@@ -848,8 +516,8 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="polTreso" class="small" style="font-weight:700">Politique de trésorerie formalisée</label>
+            <div class="field-group">
+              <label for="polTreso" class="small field-label">Politique de trésorerie formalisée</label>
               <select id="polTreso" name="Politique de trésorerie">
                 <option value="">Sélectionner…</option>
                 <option>Aucune</option>
@@ -857,8 +525,8 @@
                 <option>Existant et appliquée</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label for="polInvest" class="small" style="font-weight:700">Politique d’investissement / risque validée par le board</label>
+            <div class="field-group">
+              <label for="polInvest" class="small field-label">Politique d’investissement / risque validée par le board</label>
               <select id="polInvest" name="Politique d’investissement / risque">
                 <option value="">Sélectionner…</option>
                 <option>Oui</option>
@@ -868,8 +536,8 @@
             </div>
           </div>
 
-          <div style="display:grid;gap:.4rem;margin-top:.75rem">
-            <label for="frequenceComite" class="small" style="font-weight:700">Fréquence de revue en comité (audit / risques / board)</label>
+          <div class="field-group" style="margin-top:.75rem">
+            <label for="frequenceComite" class="small field-label">Fréquence de revue en comité (audit / risques / board)</label>
             <select id="frequenceComite" name="Fréquence revue comité">
               <option value="">Sélectionner…</option>
               <option>Au fil de l’eau</option>
@@ -882,22 +550,16 @@
 
         <!-- ========== ÉTAPE 5 : CONTEXTE & VALIDATION ========== -->
         <section class="wizard-step" data-step="5" aria-label="Étape 5 — Contexte & validation" tabindex="-1">
-          <div class="label muted" style="margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem">
-            <span style="
-              display:inline-flex;
-              width:.5rem;
-              height:.5rem;
-              border-radius:999px;
-              background:linear-gradient(120deg,#16a34a,#0f766e);
-            "></span>
+          <div class="label muted step-header">
+            <span class="step-dot"></span>
             <span>Étape 5/5 — Contexte &amp; validation</span>
           </div>
-          <p class="muted small" style="margin-top:0;margin-bottom:1rem">
+          <p class="muted small step-subtitle">
             Quelques lignes pour comprendre votre contexte et organiser la restitution.
           </p>
 
-          <div style="display:grid;gap:.4rem">
-            <label for="objectifPrioritaire" class="small" style="font-weight:700">Objectif prioritaire de la démarche</label>
+          <div class="field-group">
+            <label for="objectifPrioritaire" class="small field-label">Objectif prioritaire de la démarche</label>
             <select id="objectifPrioritaire" name="Objectif prioritaire">
               <option value="">Sélectionner…</option>
               <option>Réduire l’érosion de trésorerie (inflation)</option>
@@ -907,8 +569,8 @@
             </select>
           </div>
 
-          <div style="display:grid;gap:.4rem;margin-top:.75rem">
-            <label for="comments" class="small" style="font-weight:700">Contexte &amp; objectifs internes</label>
+          <div class="field-group" style="margin-top:.75rem">
+            <label for="comments" class="small field-label">Contexte &amp; objectifs internes</label>
             <textarea
               id="comments"
               name="Commentaires"
@@ -919,15 +581,15 @@
           </div>
 
           <div class="grid" style="gap:1rem;margin-top:.75rem">
-            <div style="display:grid;gap:.4rem">
-              <label for="visio" class="small" style="font-weight:700">Souhaitez-vous une visio de restitution (45 min) ?</label>
+            <div class="field-group">
+              <label for="visio" class="small field-label">Souhaitez-vous une visio de restitution (45 min) ?</label>
               <select id="visio" name="Visio restitution">
                 <option>Oui, visio 45 min</option>
                 <option>Non, envoi du rapport en priorité</option>
               </select>
             </div>
-            <div style="display:grid;gap:.4rem">
-              <label class="small" style="font-weight:700">Créneau préféré pour un échange</label>
+            <div class="field-group">
+              <label class="small field-label">Créneau préféré pour un échange</label>
               <div class="grid" style="gap:.4rem">
                 <select id="jourCreneau" name="Jour préféré">
                   <option value="">Jour préféré (optionnel)</option>
@@ -949,17 +611,16 @@
           </div>
 
           <!-- Récapitulatif synthétique -->
-          <div id="wizardSummary" class="wizard-summary" aria-live="polite" style="margin-top:1rem">
+          <div id="wizardSummary" class="wizard-summary" aria-live="polite">
             <!-- Contenu généré en JS -->
           </div>
 
           <!-- Opt-in & consentement -->
-          <label class="small" style="display:flex;gap:.5rem;align-items:flex-start;margin-top:1rem">
+          <label class="small consent-row">
             <input
               type="checkbox"
               id="optinMemo"
               name="Opt-in Mémo Numérion"
-              style="margin-top:.15rem"
             />
             <span>
               Je souhaite recevoir le mémo Numérion Éducation™ (1 à 2 fois par mois) sur la trésorerie numérique,
@@ -967,13 +628,12 @@
             </span>
           </label>
 
-          <label class="small" style="display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem">
+          <label class="small consent-row">
             <input
               type="checkbox"
               id="consentAudit"
               name="Consentement"
               required
-              style="margin-top:.15rem"
             />
             <span>
               Je confirme fournir des informations exactes, être en position de décision ou dûment mandaté,
@@ -988,15 +648,15 @@
           <button type="button" class="btn btn-light" id="wizardPrev" disabled>Étape précédente</button>
           <div class="small muted" id="wizardStepIndicator">Étape 1 sur 5</div>
           <button type="button" class="btn btn-dark" id="wizardNext">Étape suivante</button>
-          <button type="submit" class="btn btn-green" id="wizardSubmit" style="display:none">
+          <button type="submit" class="btn btn-green" id="wizardSubmit">
             Envoyer ma demande d'audit
           </button>
         </div>
 
-        <div class="small muted" id="wizardStatus" role="status" aria-live="polite" style="margin-top:.5rem"></div>
+        <div class="small muted wizard-status" id="wizardStatus" role="status" aria-live="polite"></div>
 
         <!-- Bloc RGPD / confidentialité -->
-        <p class="small muted" style="margin-top:.7rem;line-height:1.5">
+        <p class="small muted rgpd-block">
           Données traitées par Numérion Éducation™ pour l’analyse de votre dossier et la prise de contact.
           Conservation maximale : 24 mois, sauf relation contractuelle prolongée. Vous pouvez exercer vos droits
           d’accès, de rectification et d’opposition en nous contactant à l’adresse indiquée dans nos mentions légales.
@@ -1007,254 +667,7 @@
     </section>
   </div>
 
-  <!-- ========== LOGIQUE WIZARD (navigation + validation + scoring + envoi AJAX) ========== -->
-  <script>
-    (function(){
-      const form = document.getElementById('auditWizardForm');
-      const successCard = document.getElementById('auditSuccessLocal');
-      const formCard = document.getElementById('form-audit');
-      if (!form) return;
-
-      const steps = Array.from(form.querySelectorAll('.wizard-step'));
-      const progressFill = document.getElementById('wizardProgressFill');
-      const labels = Array.from(document.querySelectorAll('.wizard-step-label'));
-      const prevBtn = document.getElementById('wizardPrev');
-      const nextBtn = document.getElementById('wizardNext');
-      const submitBtn = document.getElementById('wizardSubmit');
-      const indicator = document.getElementById('wizardStepIndicator');
-      const statusNode = document.getElementById('wizardStatus');
-      const summaryNode = document.getElementById('wizardSummary');
-
-      const submitDateInput = document.getElementById('wizardSubmitDate');
-      const sourceInput = document.getElementById('wizardSource');
-      const maturityInput = document.getElementById('wizardMaturityScore');
-      const segmentInput = document.getElementById('wizardSegment');
-
-      let current = 0; // index
-
-      // Source depuis l’URL (?source=...) ou valeur par défaut
-      (function initSource(){
-        try{
-          const params = new URLSearchParams(window.location.search);
-          const src = params.get('source') || 'Site Numérion Éducation';
-          if(sourceInput) sourceInput.value = src;
-        }catch(e){
-          if(sourceInput) sourceInput.value = 'Site Numérion Éducation';
-        }
-      })();
-
-      function updateUI(){
-        steps.forEach((step,i)=>{
-          step.classList.toggle('is-active', i === current);
-        });
-        labels.forEach((lbl,i)=>{
-          lbl.classList.toggle('is-active', i === current);
-        });
-
-        const total = steps.length;
-        const percent = ((current+1)/total)*100;
-        if(progressFill) progressFill.style.width = percent + '%';
-        if(indicator) indicator.textContent = `Étape ${current+1} sur ${total}`;
-        prevBtn.disabled = current === 0;
-
-        if(current === total-1){
-          nextBtn.style.display = 'none';
-          submitBtn.style.display = 'inline-flex';
-          buildSummary();
-        }else{
-          nextBtn.style.display = 'inline-flex';
-          submitBtn.style.display = 'none';
-          if(summaryNode) summaryNode.innerHTML = '';
-        }
-
-        statusNode.textContent = '';
-
-        // Focus sur l’étape active + scroll
-        const activeStep = steps[current];
-        if(activeStep){
-          activeStep.setAttribute('tabindex','-1');
-          activeStep.focus({preventScroll:true});
-          const rect = form.getBoundingClientRect();
-          const offset = window.pageYOffset + rect.top - 80;
-          window.scrollTo({top: offset, behavior:'smooth'});
-        }
-      }
-
-      function validateStep(index){
-        const step = steps[index];
-        if(!step) return true;
-        const requiredFields = Array.from(step.querySelectorAll('[required]'));
-        let valid = true;
-
-        for(const field of requiredFields){
-          field.setCustomValidity('');
-
-          const isCheckbox = field.type === 'checkbox';
-          const isEmpty = isCheckbox ? !field.checked : !field.value.trim();
-
-          if(isEmpty){
-            field.setCustomValidity('Champ requis');
-          }
-
-          if(!field.reportValidity()){
-            valid = false;
-            break;
-          }
-        }
-
-        if(!valid){
-          statusNode.textContent = "Certains champs sont manquants ou invalides à cette étape. Merci de les compléter.";
-        }else{
-          statusNode.textContent = '';
-        }
-        return valid;
-      }
-
-      function buildSummary(){
-        if(!summaryNode) return;
-
-        const nomSoc = document.getElementById('nomSoc')?.value || '';
-        const role = document.getElementById('role')?.value || '';
-        const secteur = document.getElementById('secteur')?.value || '';
-        const taille = document.getElementById('taille')?.value || '';
-        const tresoEst = document.getElementById('tresoEst')?.value || '';
-        const alloc = document.getElementById('alloc')?.value || '';
-        const horizon = document.getElementById('horizon')?.value || '';
-        const urgence = document.getElementById('urgence')?.value || '';
-        const objectif = document.getElementById('objectifPrioritaire')?.value || '';
-
-        const items = [
-          nomSoc ? `Entreprise : ${nomSoc}` : '',
-          role ? `Rôle décisionnel : ${role}` : '',
-          (secteur || taille) ? `Profil : ${secteur || 'Secteur non précisé'} · ${taille || 'Taille non précisée'}` : '',
-          tresoEst ? `Trésorerie disponible estimée : ${tresoEst}` : '',
-          alloc ? `Allocation crypto envisagée : ${alloc}` : '',
-          horizon ? `Horizon de la poche : ${horizon}` : '',
-          urgence ? `Niveau d’urgence : ${urgence}` : '',
-          objectif ? `Objectif prioritaire : ${objectif}` : ''
-        ].filter(Boolean);
-
-        if(!items.length){
-          summaryNode.innerHTML = '';
-          return;
-        }
-
-        summaryNode.innerHTML = `
-          <div class="wizard-summary-title">Résumé des points clés transmis</div>
-          <ul class="wizard-summary-list">
-            ${items.map(item => `<li>${item}</li>`).join('')}
-          </ul>
-          <p style="margin-top:.4rem">
-            Ce résumé sera intégré à votre dossier afin de faciliter la lecture pour votre direction et vos auditeurs.
-          </p>
-        `;
-      }
-
-      function computeMaturityScore(){
-        const maturity = document.getElementById('maturity')?.value || '';
-        const exposition = document.getElementById('expositionActuelle')?.value || '';
-        const urgence = document.getElementById('urgence')?.value || '';
-
-        let score = 0;
-
-        if(maturity === 'Aucune') score += 20;
-        if(maturity === 'Partielle') score += 50;
-        if(maturity === 'Complète') score += 80;
-
-        if(exposition === 'Aucune exposition') score += 20;
-        if(exposition === 'Exposition limitée & non structurée') score += 40;
-        if(exposition === 'Exposition significative déjà en place') score += 60;
-
-        if(urgence === 'Étude / cadrage interne') score += 10;
-        if(urgence === 'Instruction board / comité déjà lancée') score += 25;
-        if(urgence === 'Exécution dans les 30 jours') score += 40;
-
-        score = Math.max(0, Math.min(100, score));
-        if(maturityInput) maturityInput.value = String(score);
-      }
-
-      function computeSegment(){
-        const secteur = document.getElementById('secteur')?.value || '';
-        const taille = document.getElementById('taille')?.value || '';
-        let segment = '';
-
-        if(!secteur && !taille){
-          segment = '';
-        }else{
-          segment = `${secteur || 'Secteur ND'} — ${taille || 'Taille ND'}`;
-        }
-
-        if(segmentInput) segmentInput.value = segment;
-      }
-
-      prevBtn.addEventListener('click', function(){
-        if(current > 0){
-          current--;
-          updateUI();
-        }
-      });
-
-      nextBtn.addEventListener('click', function(){
-        if(!validateStep(current)) return;
-        if(current < steps.length-1){
-          current++;
-          updateUI();
-        }
-      });
-
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-
-        if(!validateStep(current)){
-          return;
-        }
-
-        if(submitDateInput){
-          submitDateInput.value = new Date().toISOString();
-        }
-
-        computeMaturityScore();
-        computeSegment();
-        buildSummary();
-
-        statusNode.textContent = "Envoi sécurisé de votre demande d’audit…";
-
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        })
-        .then(function(response){
-          if (response.ok) {
-            statusNode.textContent = "Votre demande d’audit Numérion a bien été envoyée.";
-            // Affiche la carte de succès, masque le formulaire
-            if(successCard){
-              successCard.style.display = 'block';
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            if(formCard){
-              formCard.style.display = 'none';
-            }
-            // Sécurise les boutons
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            submitBtn.disabled = true;
-          } else {
-            return response.json().then(function(data){
-              throw new Error(data.error || 'Une erreur est survenue lors de l’envoi.');
-            });
-          }
-        })
-        .catch(function(error){
-          statusNode.textContent = "Erreur lors de l’envoi de votre demande d’audit. Merci de réessayer ou de nous contacter directement.";
-          console.error(error);
-        });
-      });
-
-      updateUI();
-    })();
-  </script>
+  <!-- JS -->
+  <script src="numerion.js"></script>
 </body>
 </html>
